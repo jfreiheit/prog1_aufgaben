@@ -1,12 +1,11 @@
 ## Use https://github.com/sj26/rspec_junit_formatter to generate a JUnit report format XML file with rspec
-ruby:
+java:
   stage: test
   script:
-    - bundle install
-    - bundle exec rspec --format progress --format RspecJunitFormatter --out rspec.xml
+    - mvn verify
   artifacts:
     when: always
-    paths:
-      - rspec.xml
     reports:
-      junit: rspec.xml
+      junit:
+        - target/surefire-reports/TEST-*.xml
+        - target/failsafe-reports/TEST-*.xml
