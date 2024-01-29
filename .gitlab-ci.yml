@@ -1,4 +1,11 @@
-## Use https://github.com/sj26/rspec_junit_formatter to generate a JUnit report format XML file with rspec
+image: maven:latest
+
+stages:
+  - build
+  - test
+  - package
+  - deploy
+  -
 java:
   stage: test
   script:
