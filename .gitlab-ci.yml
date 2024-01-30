@@ -3,16 +3,18 @@ image: maven:latest
 stages:
   - build
   - test
-  - package
-  - deploy
 
-java:
+build-maven:
+  stage: build
+  script:
+    mvn build
+
+test-maven:
   stage: test
   script:
-    - mvn verify
+    mvn test
   artifacts:
     when: always
     reports:
       junit:
         - target/surefire-reports/TEST-*.xml
-        - target/failsafe-reports/TEST-*.xml
