@@ -33,8 +33,8 @@ jobs:
       run: mvn test --batch-mode --fail-at-end
     - name: Publish Test Report
       if: success() || failure()
-      uses: scacap/action-surefire-report@v1
+      uses: ScaCap/action-surefire-report@v1.7.3
       with:
-          name: Maven Tests
-          report-path: target/surefire-reports/*.xml
+          check_name: Maven Tests
+          report-paths: target/surefire-reports/*.xml
           fail-on-error: true
