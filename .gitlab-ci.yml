@@ -1,31 +1,42 @@
 image: maven:latest
 
-cache:
-  paths:
-    - .m2/repository
-
 stages:
   - build
   - test
   - deploy
 
+variables: 
+  MAVEN_CLI_OPTS: " --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PRJECT_DIR/.m2/repository"
+
+cache: 
+  paths: 
+    - .m2/repository/
+
 build-maven:
   stage: build
   script:
     - echo "Compiling the code ..."
-    - mvn build
+    - mvn $MAVEN_CLI_OPTS compile
     - echo "Compile complete."
 
 test-maven:
   stage: test
   script:
     - echo "Running unit tests ..."
-    - mvn test
+    - mvn $MAVEN_CLI_OPTS test
     - echo "Tests finished."
   artifacts:
     when: always
-    paths:
-      - target/surefire-reports/TEST-*.xml
     reports:
       junit:
         - target/surefire-reports/TEST-*.xml
+
+deploy-maven:
+  stage: deploy
+  environment: staging
+  script:
+    - echo "Deploying application ..."
+    - mvn $MAVEN_CLI_OPTS package
+    - mvn $MAVEN_CLI_OPTS exec:java -Dexec.mainClass="org.example.App"
+    - echo "Deploy complete."
