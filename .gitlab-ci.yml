@@ -8,6 +8,7 @@ stages:
 variables: 
   MAVEN_CLI_OPTS: " --batch-mode"
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PRJECT_DIR/.m2/repository"
+  CI_DEBUG_TRACE: "true"
 
 cache: 
   paths: 
