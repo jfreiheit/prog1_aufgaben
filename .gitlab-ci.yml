@@ -1,18 +1,27 @@
 image: maven:latest
 
+cache:
+  paths:
+    - .m2/repository
+
 stages:
   - build
   - test
+  - deploy
 
 build-maven:
   stage: build
   script:
-    mvn build
+    - echo "Compiling the code ..."
+    - mvn build
+    - echo "Compile complete."
 
 test-maven:
   stage: test
   script:
-    mvn test
+    - echo "Running unit tests ..."
+    - mvn test
+    - echo "Tests finished."
   artifacts:
     when: always
     paths:
